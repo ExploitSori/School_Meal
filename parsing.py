@@ -3,19 +3,24 @@ import BeautifulSoup
 import re
 from datetime import datetime
 
-week = ['¿ù', 'È­', '¼ö', '¸ñ', '±İ', 'Åä', 'ÀÏ']
+week = ['ì›”', 'í™”', 'ìˆ˜', 'ëª©', 'ê¸ˆ', 'í† ', 'ì¼']
 school="input your school code"
 
 url="http://stu.sen.go.kr/sts_sci_md00_001.do?schulCode="+school+"&schulCrseScCode=4&schulKndScCode=04&schMmealScCode=1"
 html=urllib.urlopen(url)
 pas=BeautifulSoup.BeautifulSoup(html)
 paslist=pas.findAll('td')
-t=datetime.today().weekday()+1#±Ş½Ä Å×ÀÌºíÀº Ã¹ÁÖ ÀÏ¿äÀÏÀÌ 0 ÇÏÁö¸¸ weekday ÇÔ¼ö´Â ¿ù¿äÀÏÀÌ 0
-day=datetime.today().day#¿À´Ã ³¯Â¥ +¿äÀÏÀ» ´õÇØÁà¾ß Å×ÀÌºíÀÇ ½Ä´ÜÇ¥¸¦ ÆÄ½Ì
 
-result=str(paslist[t+day])
+t=datetime.today().weekday()+1#ê¸‰ì‹ í…Œì´ë¸”ì€ ì²«ì£¼ ì¼ìš”ì¼ì´ 0 í•˜ì§€ë§Œ weekday í•¨ìˆ˜ëŠ” ì›”ìš”ì¼ì´ 0
+day=datetime.today().day#ì˜¤ëŠ˜ ë‚ ì§œ +ìš”ì¼ì„ ë”í•´ì¤˜ì•¼ í…Œì´ë¸”ì˜ ì‹ë‹¨í‘œë¥¼ íŒŒì‹±
 
-print str(datetime.today().year)+"³â "+str(datetime.today().month)+"¿ù "+str(day)+"ÀÏ "+week[t-1]+"¿äÀÏ"
+weeks=day/7
+y=weeks*7
+x=t
+
+result=str(paslist[y+x])
+
+print str(datetime.today().year)+"ë…„ "+str(datetime.today().month)+"ì›” "+str(day)+"ì¼ "+week[t-1]+"ìš”ì¼"
 
 foodlist=re.split('<br />',result)
 del foodlist[0]
@@ -23,6 +28,5 @@ del foodlist[0]
 
 for i in foodlist:
     food=i
-    sli=food.find('*')#*±âÁØÀ¸·Î ½½¶óÀÌ½º
+    sli=food.find('*')#*ê¸°ì¤€ìœ¼ë¡œ ìŠ¬ë¼ì´ìŠ¤
     print food[:sli]
-
