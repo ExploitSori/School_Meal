@@ -1,5 +1,7 @@
 import urllib
 import BeautifulSoup
+import calendar
+import time
 import re
 from datetime import datetime
 
@@ -11,13 +13,13 @@ html=urllib.urlopen(url)
 pas=BeautifulSoup.BeautifulSoup(html)
 paslist=pas.findAll('td')
 
+now=time.localtime()
+first=calendar.monthrange(now.tm_year,now.tm_mon)
+
 t=datetime.today().weekday()+1
 day=datetime.today().day
-weeks=day/7
-y=weeks*7
-x=t
 
-result=str(paslist[y+x])
+result=str(paslist[day+first[0]])
 
 print str(datetime.today().year)+"-"+str(datetime.today().month)+"-"+str(day)+"-"+week[t-1]
 
